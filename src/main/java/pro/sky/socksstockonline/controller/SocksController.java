@@ -69,7 +69,7 @@ public class SocksController {
             tags = "Носки"
     )
     @PostMapping("/income")
-    public ResponseEntity<Boolean> socksIncome(@RequestBody Socks socks) {
+    public ResponseEntity<Socks> socksIncome(@RequestBody Socks socks) {
         return ResponseEntity.ok(socksService.socksIncome(socks));
     }
 
@@ -92,7 +92,7 @@ public class SocksController {
             tags = "Носки"
     )
     @PostMapping("/outcome")
-    public ResponseEntity<Boolean> socksOutcome(@RequestBody Socks socks) {
+    public ResponseEntity<Socks> socksOutcome(@RequestBody Socks socks) {
         return ResponseEntity.ok(socksService.socksOutcome(socks));
     }
 }

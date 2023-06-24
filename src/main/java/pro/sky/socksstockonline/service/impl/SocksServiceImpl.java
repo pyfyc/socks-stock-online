@@ -1,16 +1,11 @@
 package pro.sky.socksstockonline.service.impl;
 
 import org.springframework.stereotype.Service;
-import pro.sky.socksstockonline.exception.NoSuchItemInStockException;
-import pro.sky.socksstockonline.exception.NotEnoughInStockException;
-import pro.sky.socksstockonline.exception.UnknownOperationException;
+import pro.sky.socksstockonline.exception.*;
 import pro.sky.socksstockonline.model.Socks;
 import pro.sky.socksstockonline.repository.SocksRepository;
 import pro.sky.socksstockonline.service.SocksService;
 
-import java.security.InvalidParameterException;
-
-import static java.lang.Boolean.TRUE;
 import static pro.sky.socksstockonline.constant.ErrorMessage.*;
 
 @Service
@@ -48,23 +43,22 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public Boolean socksIncome(Socks socks) {
+    public Socks socksIncome(Socks socks) {
         validateCottonPart(socks.getCottonPart());
         validateQuantity(socks.getQuantity());
 
         Socks socksExist = socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
-        if (socksExist == null) {
-            socksRepository.save(socks);
-        } else {
+        if (socksExist != null) {
             socksExist.setQuantity(socksExist.getQuantity() + socks.getQuantity());
-            socksRepository.save(socksExist);
+            socks = socksExist;
         }
+        socksRepository.save(socks);
 
-        return TRUE;
+        return socks;
     }
 
     @Override
-    public Boolean socksOutcome(Socks socks) {
+    public Socks socksOutcome(Socks socks) {
         validateCottonPart(socks.getCottonPart());
         validateQuantity(socks.getQuantity());
 
@@ -75,21 +69,22 @@ public class SocksServiceImpl implements SocksService {
             throw new NotEnoughInStockException(NOT_ENOUGH_IN_STOCK_MSG);
         } else {
             socksExist.setQuantity(socksExist.getQuantity() - socks.getQuantity());
-            socksRepository.save(socksExist);
+            socks = socksExist;
+            socksRepository.save(socks);
         }
 
-        return TRUE;
+        return socks;
     }
 
     private void validateCottonPart(Integer cottonPart) {
         if (cottonPart < 0 || cottonPart > 100) {
-            throw new InvalidParameterException(INVALID_COTTON_PERCENT_VALUE_MSG);
+            throw new InvalidCottonPartException(INVALID_COTTON_PART_VALUE_MSG);
         }
     }
 
     private void validateQuantity(Integer quantity) {
         if (quantity < 1) {
-            throw new InvalidParameterException(INVALID_SOCKS_QUANTITY_VALUE_MSG);
+            throw new InvalidSocksQuantityException(INVALID_SOCKS_QUANTITY_VALUE_MSG);
         }
     }
 }
