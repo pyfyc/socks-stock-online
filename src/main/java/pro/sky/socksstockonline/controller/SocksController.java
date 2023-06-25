@@ -51,7 +51,6 @@ public class SocksController {
 
     @Operation(
             summary = "Зарегистрировать приход носков на склад",
-            parameters = {},
             responses = {
                     @ApiResponse(
                             responseCode = "200",
