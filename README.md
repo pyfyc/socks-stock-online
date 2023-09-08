@@ -45,8 +45,8 @@ HTTP 500 — произошла ошибка, не зависящая от вы�
 
 Query examples:
 
-/api/socks?color=red&operation=moreThan&cottonPart=90 — должен вернуть общее количество красных носков с долей хлопка более 90%;  
-/api/socks?color=black&operation=lessThan?cottonPart=10 — должен вернуть общее количество черных носков с долей хлопка менее 10%.
+/api/socks?color=red&operation=moreThan&cottonPart=90 — returns total count of red socks with cotton part more than 90%;  
+/api/socks?color=black&operation=lessThan?cottonPart=10 — returns total count of black socks with cotton part less than 10%.
 
 ## Stack of technologies:
 Java 17, Spring Boot 3.0.5, Hibernate, PostgreSQL, Lombok, Spring Doc Open Api   
