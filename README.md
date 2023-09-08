@@ -3,7 +3,7 @@
 ## Main functionalities:
 
 - socks receipt and release;
-- track the number of pieces of each color and fabric composition at a time.
+- track the number of pieces of each color and cotton part at a time.
 
 ## URL HTTP-calls list:
 
